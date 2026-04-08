@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lost & Found System</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #121212;
+            color: white;
+        }
+
+        h1 {
+            color: orange;
+        }
+
+        .box {
+            margin: 20px auto;
+            padding: 20px;
+            width: 60%;
+            background: #1e1e1e;
+            border-radius: 10px;
+        }
+
+        input {
+            margin: 5px;
+            padding: 10px;
+            width: 60%;
+        }
+
+        button {
+            padding: 10px;
+            margin: 10px;
+            background: orange;
+            border: none;
+            cursor: pointer;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Lost & Found System</h1>
+
+<div class="box">
+    <h2>Report Lost Item</h2>
+    <input id="lostName" placeholder="Item name"><br>
+    <input id="lostDesc" placeholder="Description"><br>
+    <button onclick="addLost()">Report Lost</button>
+</div>
+
+<div class="box">
+    <h2>Report Found Item</h2>
+    <input id="foundName" placeholder="Item name"><br>
+    <input id="foundDesc" placeholder="Description"><br>
+    <button onclick="addFound()">Report Found</button>
+</div>
+
+<div class="box">
+    <h2>Search Item</h2>
+    <input id="searchBox" placeholder="Search item"><br>
+    <button onclick="searchItem()">Search</button>
+</div>
+
+<div class="box">
+    <h2>Results</h2>
+    <div id="output"></div>
+</div>
+
+<script>
+let lostItems = [];
+let foundItems = [];
+
+function addLost() {
+    let name = document.getElementById("lostName").value;
+    let desc = document.getElementById("lostDesc").value;
+
+    lostItems.push({name, desc});
+    alert("Lost item added!");
+}
+
+function addFound() {
+    let name = document.getElementById("foundName").value;
+    let desc = document.getElementById("foundDesc").value;
+
+    foundItems.push({name, desc});
+    alert("Found item added!");
+}
+
+function searchItem() {
+    let search = document.getElementById("searchBox").value.toLowerCase();
+    let output = "";
+
+    lostItems.forEach(item => {
+        if(item.name.toLowerCase().includes(search)){
+            output += `<p>Lost: ${item.name}</p>`;
+        }
+    });
+
+    foundItems.forEach(item => {
+        if(item.name.toLowerCase().includes(search)){
+            output += `<p>Found: ${item.name}</p>`;
+        }
+    });
+
+    document.getElementById("output").innerHTML = output || "No results found";
+}
+</script>
+
+</body>
+</html>
