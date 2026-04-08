@@ -1,0 +1,108 @@
+lost_items = []
+found_items = []
+
+def report_lost():
+    name = input("Enter item name: ").strip()
+    desc = input("Enter description: ").strip()
+    owner = input("Enter your name: ").strip()
+
+    if not name or not desc or not owner:
+        print("All fields are required!\n")
+        return
+
+    lost_items.append({"item": name, "desc": desc, "person": owner})
+    print("Lost item reported successfully!\n")
+
+def report_found():
+    name = input("Enter item name: ").strip()
+    desc = input("Enter description: ").strip()
+    finder = input("Enter your name: ").strip()
+
+    if not name or not desc or not finder:
+        print("All fields are required!\n")
+        return
+
+    found_items.append({"item": name, "desc": desc, "person": finder})
+    print("Found item reported successfully!\n")
+
+def view_items():
+    print("\n--- Lost Items ---")
+    if not lost_items:
+        print("No lost items reported.")
+    else:
+        for i in lost_items:
+            print(f"Item: {i['item']}, Desc: {i['desc']}, Owner: {i['person']}")
+
+    print("\n--- Found Items ---")
+    if not found_items:
+        print("No found items reported.")
+    else:
+        for i in found_items:
+            print(f"Item: {i['item']}, Desc: {i['desc']}, Finder: {i['person']}")
+    print()
+
+def search_item():
+    search = input("Enter item name or description: ").lower()
+    found_flag = False
+
+    print("\nSearching in Lost Items:")
+    for i in lost_items:
+        if search in i['item'].lower() or search in i['desc'].lower():
+            print(f"Item: {i['item']}, Owner: {i['person']}")
+            found_flag = True
+
+    print("\nSearching in Found Items:")
+    for i in found_items:
+        if search in i['item'].lower() or search in i['desc'].lower():
+            print(f"Item: {i['item']}, Finder: {i['person']}")
+            found_flag = True
+
+    if found_flag:
+        print("\nPossible match found!")
+    else:
+        print("\nNo matching item found.")
+    print()
+
+def match_items():
+    print("\n--- Matching Lost & Found Items ---")
+    match_found = False
+
+    for lost in lost_items:
+        for found in found_items:
+            if (lost['item'].lower() in found['item'].lower() or 
+                found['item'].lower() in lost['item'].lower()):
+                
+                print(f"\nMATCH FOUND:")
+                print(f"Lost Item -> {lost['item']} (Owner: {lost['person']})")
+                print(f"Found Item -> {found['item']} (Finder: {found['person']})")
+                match_found = True
+
+    if not match_found:
+        print("No matches found.\n")
+
+# Main loop
+while True:
+    print("1. Report Lost Item")
+    print("2. Report Found Item")
+    print("3. View All Items")
+    print("4. Search Item")
+    print("5. Match Items")   # NEW FEATURE
+    print("6. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        report_lost()
+    elif choice == '2':
+        report_found()
+    elif choice == '3':
+        view_items()
+    elif choice == '4':
+        search_item()
+    elif choice == '5':
+        match_items()
+    elif choice == '6':
+        print("Exiting program...")
+        break
+    else:
+        print("Invalid choice! Try again.\n")
